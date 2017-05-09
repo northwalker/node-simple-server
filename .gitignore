@@ -1,3 +1,17 @@
+# IDE
+.vscode
+.idea
+
+# macOS
+.DS_Store
+
+# Development
+.tmp
+release
+build
+dist
+tmp
+
 # Logs
 logs
 *.log
