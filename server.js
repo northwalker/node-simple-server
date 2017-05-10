@@ -6,28 +6,24 @@ const helmet = require('helmet')
 const morgan = require('morgan');
 const cors = require('cors');
 const app = express();
+
+const apiRoutes = require('./routes/index.js');
+
 const port = process.env.PORT || 3000;
 
-// const indexRoutes = require('./routes/index');
-// const authRoutes = require('./routes/auth');
-// const apiRoutes = require('./routes/api');
-
-
 app.disable('x-powered-by');
-app.use(bodyParser.urlencoded({ extended: true }));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true })); // for parsing application/x-www-form-urlencoded
+app.use(bodyParser.json()); // for parsing application/json
 app.use(cookieParser());
-// app.use(morgan('combined'));
-app.use(morgan('dev'));
 app.use(helmet());
 app.use(cors());
+// app.use(morgan('combined'));
+app.use(morgan('dev'));
 
 app.use(express.static(path.join(__dirname, 'public')));
 
 
-// app.use('/', indexRoutes);
-// app.use('/auth', authRoutes);
-// app.use('/api', apiRoutes);
+app.use('/api', apiRoutes);
 
 app.get('/test', (req, res) => {
   res.set('Content-Type', 'application/json');
@@ -37,7 +33,7 @@ app.get('/test', (req, res) => {
   }).end();
 });
 
-app.get('*', (req, res) => {
+app.get('/*', (req, res) => {
   res.sendFile(path.join(__dirname, 'public/index.html'));
 });
 
