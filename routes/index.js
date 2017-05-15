@@ -1,9 +1,8 @@
 (function () {
   'use strict';
   const express = require('express');
-  const TodoService = require('./TodoService');
-
   const apiRouter = express.Router();
+  const musicianRoutes = require('./musicianRoutes.js'); // A demo expamle
 
   // Enable CORS from client-side
   // apiRouter.use(function (req, res, next) {
@@ -14,7 +13,8 @@
   //   next();
   // });
 
-  apiRouter.use('/todos', TodoService);
+  apiRouter.use('/musician', musicianRoutes);
 
   module.exports = apiRouter;
+
 })();

@@ -1,34 +1,35 @@
 
 (function () {
   'use strict';
+
   const express = require('express');
   const router = express.Router();
 
-  let todoList = [];
-  todoList.push({ id: 1, author: 'Beethoven', content: '' });     // For demo, fake data.
-  todoList.push({ id: 2, author: 'J.S. Bach', content: '' });     // For demo, fake data.
-  todoList.push({ id: 3, author: 'Mozart', content: '' });        // For demo, fake data.
-  todoList.push({ id: 4, author: 'Chopin', content: '' });        // For demo, fake data.
-  todoList.push({ id: 5, author: 'Schubert', content: '' });      // For demo, fake data.
-  todoList.push({ id: 6, author: 'Wagner', content: '' });        // For demo, fake data.
-  todoList.push({ id: 7, author: 'Brahms', content: '' });        // For demo, fake data.
-  todoList.push({ id: 8, author: 'Tchaikovsky', content: '' });   // For demo, fake data.
+  let musicianList = [];
+  musicianList.push({ id: 1, composer: 'Beethoven', description: '' });     // For demo, fake data.
+  musicianList.push({ id: 2, composer: 'J.S. Bach', description: '' });     // For demo, fake data.
+  musicianList.push({ id: 3, composer: 'Mozart', description: '' });        // For demo, fake data.
+  musicianList.push({ id: 4, composer: 'Chopin', description: '' });        // For demo, fake data.
+  musicianList.push({ id: 5, composer: 'Schubert', description: '' });      // For demo, fake data.
+  musicianList.push({ id: 6, composer: 'Wagner', description: '' });        // For demo, fake data.
+  musicianList.push({ id: 7, composer: 'Brahms', description: '' });        // For demo, fake data.
+  musicianList.push({ id: 8, composer: 'Tchaikovsky', description: '' });   // For demo, fake data.
 
   router.route('/')
     // URL: /api/todos
     .get((req, res, next) => {
-      res.status(200).send(todoList).end();
+      res.status(200).send(musicianList).end();
     })
     .post((req, res, next) => {
       console.log("POST", req.body);
       if (req.body && req.body.author) {   // simple valify
         let newTodo = {
-          id: todoList.length + 1,
+          id: musicianList.length + 1,
           author: req.body.author,
           content: req.body.content,
           created: new Date()
         };
-        todoList.push(newTodo);
+        musicianList.push(newTodo);
         res.status(201).send(newTodo).end();
       }
       else {
@@ -37,12 +38,13 @@
         }).end();
       }
     })
+
   router.route('/:id')
     // URL: /api/todo/:id
     .get((req, res, next) => {
       const targetId = Number(req.params.id);
       let target = undefined;
-      todoList.forEach(todoItem => {
+      musicianList.forEach(todoItem => {
         if (targetId == todoItem.id) {
           target = todoItem;
         }
@@ -57,14 +59,14 @@
     })
     .put((req, res, next) => {
       const targetId = Number(req.params.id);
-      const index = todoList.findIndex(value => value.id === targetId);
+      const index = musicianList.findIndex(value => value.id === targetId);
       if (index !== -1 && req.body) {
         if (req.body.author)
-          todoList[index].author = req.body.author
+          musicianList[index].author = req.body.author
         if (req.body.content)
-          todoList[index].content = req.body.content;
+          musicianList[index].content = req.body.content;
 
-        res.status(200).send(todoList[index]).end();
+        res.status(200).send(musicianList[index]).end();
       }
       else {
         res.status(404).send({
@@ -75,9 +77,9 @@
     })
     .delete((req, res, next) => {
       const targetId = Number(req.params.id);
-      const index = todoList.findIndex(value => value.id === targetId);
+      const index = musicianList.findIndex(value => value.id === targetId);
       if (index !== -1) {
-        todoList.splice(index, 1);
+        musicianList.splice(index, 1);
         res.status(200).send({
           'message': 'Delete a todo by ID complete!'
         }).end();
